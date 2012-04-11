@@ -1,3 +1,7 @@
+Left click moves bandit.
+Right click moves skeleton.
+Spacebar runs pathfinding algorithm.
+
               _ |\_
               \` ..\
          __,.-" =__Y=
