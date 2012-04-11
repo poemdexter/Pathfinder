@@ -1,5 +1,9 @@
 class Pathfinder
 
+	def initialize(game)
+		@game = game
+	end
+
   def get_path(start, finish, world)
     @open_list = []
     @closed_list = []
@@ -9,7 +13,7 @@ class Pathfinder
 		
     # moving to ANY square costs 1, even diagonals
     @movement_cost = 1
-    
+		
     #add starting point to open list
     starting_point = create_node(-1, 0, start, start, 0)
     @open_list << starting_point
@@ -127,7 +131,7 @@ class Pathfinder
   
   # ignore squares on closed_list and check bounds of world
   def can_add_to_open(p)
-    !@closed_list.include?(p) && is_within_bounds(p)
+    !@closed_list.include?(p) && is_within_bounds(p) && !@game.walls.include?(p)
   end
   
   def is_within_bounds(point)
