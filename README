@@ -1,6 +1,7 @@
 Left click moves bandit.
 Right click moves skeleton.
 Spacebar runs pathfinding algorithm.
+W creates and removes a wall.
 
               _ |\_
               \` ..\
