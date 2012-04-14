@@ -1,5 +1,5 @@
 class World
-  attr_reader :grid, :width, :height
+  attr_reader :grid, :width, :height, :walls
   
   def initialize(window)
     @width = 20
@@ -8,6 +8,9 @@ class World
     @grid = @grid.map {Array.new(height,0)}
     
     @target_sprite = Gosu::Image.new(window, "target.bmp", true)
+    @wall_sprite = Gosu::Image.new(window, "wall.bmp", false)
+    
+    @walls = []
   end
   
   def draw
@@ -16,6 +19,20 @@ class World
         @target_sprite.draw(x*24,y*24,0)
       end
     end
+    
+    @walls.each do |pos|
+			@wall_sprite.draw(24*pos[0], 24*pos[1], 2)
+		end
   end
+  
+  def handle_wall_click(x, y)
+		x = (x/24).floor
+    y = (y/24).floor
+		if @walls.include?([x,y])
+			@walls.delete([x,y])
+		elsif
+			@walls << [x,y]
+		end
+	end
   
 end
