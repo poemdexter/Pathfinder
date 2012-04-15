@@ -7,7 +7,7 @@ class World
     @grid = Array.new(width,[])
     @grid = @grid.map {Array.new(height,0)}
     
-    @target_sprite = Gosu::Image.new(window, "target.bmp", true)
+    @target_sprite = Gosu::Image.new(window, "grass.bmp", true)
     @wall_sprite = Gosu::Image.new(window, "wall.bmp", false)
     
     @walls = []
