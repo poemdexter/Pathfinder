@@ -1,5 +1,5 @@
 class Player < BasicGameObject
-  trait :grid_sprite
+  trait :grid_sprite, :grid_position
 
   attr_reader :fsm
 
@@ -70,25 +70,16 @@ class Player < BasicGameObject
       end
     end
   end
-  
+
   def tick?
     @new_time = Gosu::milliseconds
     @count_rate = @count_rate + (@new_time - @old_time)
     @old_time = @new_time
-    
+
     if @count_rate > @update_rate
       @count_rate = 0
       return true
     end
     false
-  end
-
-  def reposition(x, y)
-    @x = x
-    @y = y
-  end
-
-  def position
-    [@x, @y]
   end
 end
