@@ -26,7 +26,7 @@ class Game < Chingu::Window
     World.instance.image_init(self)
     Buildings.init
 
-    @player = Player.new(self)
+    @player = Player.create
 
     @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
     @player_state_text = Text.new("", :x => 5, :y => @height - 20, :zorder => 3)
@@ -53,7 +53,7 @@ class Game < Chingu::Window
 
   def left_click
     if mouse_within_screen(mouse_x, mouse_y)
-      @player.reposition(mouse_x, mouse_y)
+      @player.reposition((mouse_x / World.instance.tilesize).floor, (mouse_y / World.instance.tilesize).floor)
     end
   end
 
