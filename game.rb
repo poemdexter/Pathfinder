@@ -28,8 +28,7 @@ class Game < Chingu::Window
 
     @player = Player.create
 
-    @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
-    @player_state_text = Text.new("", :x => 5, :y => @height - 20, :zorder => 3)
+    @player_state_text = Chingu::Text.create("", :x => 5, :y => @height - 20, :zorder => 3)
   end
 
   def needs_cursor?
