@@ -1,7 +1,7 @@
 class Enemy
   
   def initialize(window)
-    @skeleton_sprite = Gosu::Image.new(window, "skeleton.bmp", false)
+    @skeleton_sprite = Gosu::Image.new(window, "img/skeleton.bmp", false)
     @x = @y = 19
   end
   

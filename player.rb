@@ -1,7 +1,7 @@
 class Player
   
   def initialize(window)
-    @bandit_sprite = Gosu::Image.new(window, "bandit.bmp", false)
+    @bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
     @x = @y = 0
   end
   
