@@ -24,16 +24,13 @@ class Game < Gosu::Window
   end
   
   def update
+		@player.update
   end
   
   def draw
     @world.draw
     @player.draw
     @enemy.draw
-    
-    if !@path.nil? 
-      draw_path
-    end
   end
   
   def button_down(id)
@@ -47,21 +44,13 @@ class Game < Gosu::Window
           @enemy.reposition(mouse_x, mouse_y)
         end
       when Gosu::KbSpace
-        @path = @pathfinder.get_path(@player.position, @enemy.position, @world)
+        @player.walk_path(@pathfinder.get_path(@player.position, @enemy.position, @world))
 			when Gosu::KbW
         if (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
           @world.handle_wall_click(mouse_x, mouse_y)
         end
     end
   end
-  
-  def draw_path
-    @path.each do |pos|
-      @path_sprite.draw(24*pos[0], 24*pos[1], 1)
-    end  
-  end
-	
-	
 end
 
 window = Game.new
