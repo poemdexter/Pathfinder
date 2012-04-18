@@ -16,7 +16,7 @@ class Game < Gosu::Window
     @enemy = Enemy.new(self)
     @pathfinder = Pathfinder.new
     
-    @path_sprite = Gosu::Image.new(self, "path.bmp", false)
+    @path_sprite = Gosu::Image.new(self, "img/path.bmp", false)
   end
   
   def needs_cursor?
