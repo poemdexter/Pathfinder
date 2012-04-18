@@ -14,6 +14,10 @@ class FSMBuild
       transition :walking_mat => :taking_mat, :walking_buildspot => :placing_mat
     end
     
+    event :got_mat do
+      transition :taking_mat => :searching_buildspot
+    end
+    
     event :need_more_mats do
       transition :placing_mat => :searching_mat
     end

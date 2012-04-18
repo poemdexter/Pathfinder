@@ -1,15 +1,12 @@
 class Pathfinder
   
-  def initialize
-  end
-  
-  def get_path(start, finish, world)
+  def self.get_path(start, finish, world)
     @open_list = PriorityQueue.new
+    @world = world
     @closed_list = []
     @start = start
     @finish = finish
-    @world = world
-    @walls = world.walls
+    @walls = @world.walls
     
     @open_list.add(1, create_node(0, calc_heuristic(@start), @start, []))
     
@@ -40,11 +37,11 @@ class Pathfinder
     nil # no path found
   end
   
-  def in_closed_list?(position)
+  def self.in_closed_list?(position)
     @closed_list.any?{|x| x[:position] == position}
   end
   
-  def create_node(g, h, pos, parent)
+  def self.create_node(g, h, pos, parent)
     {
       :g => g,
       :h => h,
@@ -53,7 +50,7 @@ class Pathfinder
     }
   end
   
-  def calc_heuristic(position)
+  def self.calc_heuristic(position)
 		x = position[0]
 		y = position[1]
 		fx = @finish[0]
@@ -62,7 +59,7 @@ class Pathfinder
     (x - fx).abs + (y - fy).abs
   end
   
-  def get_neighbors(position)
+  def self.get_neighbors(position)
     x = position[0]
 		y = position[1]
     
@@ -83,7 +80,7 @@ class Pathfinder
     real_neighbors
   end
   
-  def valid_neighbor_check(neighbor)
+  def self.valid_neighbor_check(neighbor)
     x = neighbor[0]
     y = neighbor[1]
     valid = true
@@ -92,7 +89,7 @@ class Pathfinder
     valid
   end
   
-  def backtrack_through_closed
+  def self.backtrack_through_closed
     final_path = []
     next_position = @closed_list.find{|x| x[:position] == @finish}[:position]
     final_path.unshift(next_position)

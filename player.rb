@@ -1,6 +1,10 @@
 class Player
   
-  def initialize(window)
+  attr_reader :fsm
+  
+  def initialize(window, world)
+    @world = world
+    
     @bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
     @x = @y = 0
     
@@ -18,10 +22,42 @@ class Player
   
   def update
     if tick?
-      if @path && @path.count > 0
-        node = @path.shift
-        @x = node[0]
-        @y = node[1]
+      case @fsm.state
+        when "searching_mat"
+          if @world.stones[0] && @path = Pathfinder.get_path(position, @world.stones[0], @world)
+            @fsm.path_found
+          else
+            @fsm.path_not_found
+          end
+        when "walking_mat"
+          if @path.count > 0
+            node = @path.shift
+            @x = node[0]
+            @y = node[1]
+          else
+            @fsm.arrived
+          end
+        when "taking_mat"
+          @fsm.got_mat
+          @world.stones.shift
+        when "searching_buildspot"
+          if @path = Pathfinder.get_path(position, @world.build_spot, @world)
+            @fsm.path_found
+          else
+            @fsm.path_not_found
+          end
+        when "walking_buildspot"
+          if @path.count > 0
+            node = @path.shift
+            @x = node[0]
+            @y = node[1]
+          else
+            @fsm.arrived
+          end
+        when "placing_mat"
+          # should check here if we should get more mats or start building
+          # fuck it, we love stones.  gotta catch em all
+          @fsm.need_more_mats
       end
     end
   end
@@ -45,9 +81,5 @@ class Player
   
   def position
     [@x,@y]
-  end
-  
-  def walk_path(path)
-    @path = path
   end
 end

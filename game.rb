@@ -14,11 +14,10 @@ class Game < Gosu::Window
     super 480, 480, false
     self.caption = "Dan's Shit Game For Idiots: Dubstep Protocol"
     @world = World.new(self)
-    @player = Player.new(self)
-    @enemy = Enemy.new(self)
-    @pathfinder = Pathfinder.new
+    @player = Player.new(self, @world)
     
-    @path_sprite = Gosu::Image.new(self, "img/path.bmp", false)
+    
+    @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
   end
   
   def needs_cursor?
@@ -32,26 +31,29 @@ class Game < Gosu::Window
   def draw
     @world.draw
     @player.draw
-    @enemy.draw
+    
+    @font.draw(@player.fsm.state, 3, 460,3)
   end
   
   def button_down(id)
     case id
       when Gosu::MsLeft
-        if (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
+        if mouse_within_screen(mouse_x, mouse_y)
           @player.reposition(mouse_x, mouse_y)
         end
       when Gosu::MsRight
-        if (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
-          @enemy.reposition(mouse_x, mouse_y)
+        if mouse_within_screen(mouse_x, mouse_y)
+          @world.handle_rock_click(mouse_x, mouse_y)
         end
-      when Gosu::KbSpace
-        @player.walk_path(@pathfinder.get_path(@player.position, @enemy.position, @world))
       when Gosu::KbW
-        if (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
+        if mouse_within_screen(mouse_x, mouse_y)
           @world.handle_wall_click(mouse_x, mouse_y)
         end
     end
+  end
+  
+  def mouse_within_screen(mouse_x, mouse_y)
+    (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
   end
 end
 
