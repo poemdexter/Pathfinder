@@ -1,5 +1,7 @@
 require 'gosu'
+require 'state_machine'
 
+require_relative 'fsm_build'
 require_relative 'player'
 require_relative 'world'
 require_relative 'enemy'
@@ -48,10 +50,14 @@ class Game < Gosu::Window
         end
       when Gosu::KbSpace
         @path = @pathfinder.get_path(@player.position, @enemy.position, @world)
-			when Gosu::KbW
+      when Gosu::KbW
         if (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
           @world.handle_wall_click(mouse_x, mouse_y)
         end
+      when Gosu::KbO
+        @player.walk
+      when Gosu::KbP
+        @player.stop
     end
   end
   

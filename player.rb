@@ -3,6 +3,8 @@ class Player
   def initialize(window)
     @bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
     @x = @y = 0
+    
+    @fsm = FSMBuild.new
   end
   
   def draw
