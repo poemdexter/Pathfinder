@@ -22,7 +22,7 @@ class FSMBuild
       transition :placing_mat => :building
     end
     
-    event :building_done
+    event :building_done do
       transition :building => :done
     end
   end

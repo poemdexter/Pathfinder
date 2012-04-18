@@ -46,13 +46,11 @@ class Game < Gosu::Window
           @enemy.reposition(mouse_x, mouse_y)
         end
       when Gosu::KbSpace
+        @player.walk_path(@pathfinder.get_path(@player.position, @enemy.position, @world))
+      when Gosu::KbW
         if (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
           @world.handle_wall_click(mouse_x, mouse_y)
         end
-      when Gosu::KbO
-        @player.walk
-      when Gosu::KbP
-        @player.stop
     end
   end
 end
