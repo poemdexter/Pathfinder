@@ -22,6 +22,8 @@ class Player
   def update
     if tick?
       case @fsm.state
+        when "chill"
+          @fsm.building_needed if World.instance.building_spot_exists?
         when "searching_mat"
           if World.instance.stones[0] && @path = Pathfinder.get_path(position, World.instance.stones[0])
             @fsm.path_found
@@ -54,9 +56,12 @@ class Player
             @fsm.arrived
           end
         when "placing_mat"
-          # should check here if we should get more mats or start building
-          # fuck it, we love stones.  gotta catch em all
-          @fsm.need_more_mats
+          @fsm.have_all_mats
+          #@fsm.need_more_mats
+        when "building"
+          #need to tick down here
+          World.instance.building_complete
+          @fsm.building_done
       end
     end
   end

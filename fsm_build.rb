@@ -1,6 +1,10 @@
 class FSMBuild
   
-  state_machine :initial => :searching_mat do
+  state_machine :initial => :chill do
+  
+    event :building_needed do
+      transition :chill => :searching_mat
+    end
   
     event :path_found do
       transition :searching_mat => :walking_mat, :searching_buildspot => :walking_buildspot
@@ -27,7 +31,7 @@ class FSMBuild
     end
     
     event :building_done do
-      transition :building => :done
+      transition :building => :chill
     end
   end
   

@@ -9,7 +9,7 @@ class World
     @grid = Array.new(width,[])
     @grid = @grid.map {Array.new(height,0)}
     
-    @build_spot = [9,3]
+    @build_spot = []
     
     @walls = []
     @stones = []
@@ -23,7 +23,7 @@ class World
     @target_sprite = Gosu::Image.new(window, "img/grass.bmp", true)
     @wall_sprite = Gosu::Image.new(window, "img/wall.bmp", true)
     @stone_sprite = Gosu::Image.new(window, "img/stone.bmp", true)
-    @path_sprite = Gosu::Image.new(window, "img/path.bmp", true)
+    @build_sprite = Gosu::Image.new(window, "img/path.bmp", true)
   end
   
   def draw
@@ -41,7 +41,16 @@ class World
       @stone_sprite.draw(@tilesize*pos[0], @tilesize*pos[1], 2)
     end
     
-    @path_sprite.draw(@tilesize*@build_spot[0], @tilesize*@build_spot[1], 1)
+    @build_sprite.draw(@tilesize*@build_spot[0], @tilesize*@build_spot[1], 1) if @build_spot != []
+  end
+  
+  def building_spot_exists?
+    return true if @build_spot != [] 
+    false
+  end
+  
+  def building_complete
+    @build_spot = []
   end
   
   def handle_wall_click(x, y)
@@ -64,4 +73,9 @@ class World
 		end
   end
   
+  def handle_build_click(x, y)
+    x = (x/@tilesize).floor
+    y = (y/@tilesize).floor
+		@build_spot = [x,y] if @build_spot == []
+  end
 end

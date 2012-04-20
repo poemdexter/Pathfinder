@@ -51,6 +51,10 @@ class Game < Gosu::Window
         if mouse_within_screen(mouse_x, mouse_y)
           World.instance.handle_wall_click(mouse_x, mouse_y)
         end
+      when Gosu::KbB
+        if mouse_within_screen(mouse_x, mouse_y)
+          World.instance.handle_build_click(mouse_x, mouse_y)
+        end
     end
   end
   
