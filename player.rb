@@ -2,8 +2,7 @@ class Player
   
   attr_reader :fsm
   
-  def initialize(window, world)
-    @world = world
+  def initialize(window)
     
     @bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
     @x = @y = 0
@@ -17,14 +16,14 @@ class Player
   end
   
   def draw
-    @bandit_sprite.draw(24*@x, 24*@y, 2)
+    @bandit_sprite.draw(World.instance.tilesize*@x, World.instance.tilesize*@y, 2)
   end
   
   def update
     if tick?
       case @fsm.state
         when "searching_mat"
-          if @world.stones[0] && @path = Pathfinder.get_path(position, @world.stones[0], @world)
+          if World.instance.stones[0] && @path = Pathfinder.get_path(position, World.instance.stones[0])
             @fsm.path_found
           else
             @fsm.path_not_found
@@ -39,9 +38,9 @@ class Player
           end
         when "taking_mat"
           @fsm.got_mat
-          @world.stones.shift
+          World.instance.stones.shift
         when "searching_buildspot"
-          if @path = Pathfinder.get_path(position, @world.build_spot, @world)
+          if @path = Pathfinder.get_path(position, World.instance.build_spot)
             @fsm.path_found
           else
             @fsm.path_not_found
@@ -75,8 +74,8 @@ class Player
   end
   
   def reposition(x, y)
-    @x = (x/24).floor
-    @y = (y/24).floor
+    @x = (x/World.instance.tilesize).floor
+    @y = (y/World.instance.tilesize).floor
   end
   
   def position

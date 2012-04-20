@@ -1,12 +1,11 @@
 class Pathfinder
   
-  def self.get_path(start, finish, world)
+  def self.get_path(start, finish)
     @open_list = PriorityQueue.new
-    @world = world
     @closed_list = []
     @start = start
     @finish = finish
-    @walls = @world.walls
+    @walls = World.instance.walls
     
     @open_list.add(1, create_node(0, calc_heuristic(@start), @start, []))
     
@@ -84,7 +83,7 @@ class Pathfinder
     x = neighbor[0]
     y = neighbor[1]
     valid = true
-    valid = valid && x.between?(0,@world.width-1) && y.between?(0,@world.height-1)
+    valid = valid && x.between?(0,World.instance.width-1) && y.between?(0,World.instance.height-1)
     valid = valid && !@walls.include?(neighbor)
     valid
   end
