@@ -1,11 +1,13 @@
 require 'gosu'
 require 'state_machine'
+require 'yaml'
 
 require_relative 'fsm_build'
 require_relative 'player'
 require_relative 'world'
 require_relative 'enemy'
 require_relative 'pathfinder'
+require_relative 'buildings'
 
 class Game < Gosu::Window
 	
@@ -15,6 +17,7 @@ class Game < Gosu::Window
     World.instance.image_init(self)
     @player = Player.new(self)
     
+    Buildings.init
     
     @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
   end

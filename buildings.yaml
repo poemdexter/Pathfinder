@@ -1,0 +1,7 @@
+buildings:
+  hut:
+    mats:
+      - stone
+      - stone
+      - stone
+    time: 5
