@@ -30,6 +30,10 @@ class FSMBuild
       transition :placing_mat => :building
     end
     
+    event :tick_building do
+      transition :building => same
+    end
+    
     event :building_done do
       transition :building => :chill
     end
@@ -39,4 +43,21 @@ class FSMBuild
     super
   end
   
+  def set_building(building)
+    @plans = Buildings.get_plans(building)
+    @construction_time = @plans["time"]
+  end
+  
+  def placed_mat(mat)
+    i = @plans["mats"].index(mat)
+    @plans["mats"].delete_at(i)
+  end
+  
+  def got_all_mats?
+    @plans["mats"] == []
+  end
+  
+  def tick_construction_time
+    @construction_time -= 1
+  end
 end

@@ -8,6 +8,7 @@ class Player
     @x = @y = 0
     
     @fsm = FSMBuild.new
+    @fsm.set_building(:hut)
     
     @update_rate = 200
     @count_rate = 0 
@@ -56,12 +57,19 @@ class Player
             @fsm.arrived
           end
         when "placing_mat"
-          @fsm.have_all_mats
-          #@fsm.need_more_mats
+          @fsm.placed_mat("stone")
+          if @fsm.got_all_mats? 
+            @fsm.have_all_mats 
+          else 
+            @fsm.need_more_mats 
+          end
         when "building"
-          #need to tick down here
-          World.instance.building_complete
-          @fsm.building_done
+          if @fsm.tick_construction_time == 0
+            World.instance.building_complete
+            @fsm.building_done
+          else 
+            @fsm.tick_building
+          end
       end
     end
   end

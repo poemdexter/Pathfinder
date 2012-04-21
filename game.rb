@@ -15,9 +15,9 @@ class Game < Gosu::Window
     super 480, 480, false
     self.caption = "Dan's Shit Game For Idiots: Dubstep Protocol"
     World.instance.image_init(self)
-    @player = Player.new(self)
-    
     Buildings.init
+    
+    @player = Player.new(self)
     
     @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
   end
