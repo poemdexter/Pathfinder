@@ -13,6 +13,7 @@ class World
     
     @walls = []
     @stones = []
+    @houses = []
   end
   
   def self.instance
@@ -24,6 +25,7 @@ class World
     @wall_sprite = Gosu::Image.new(window, "img/wall.bmp", true)
     @stone_sprite = Gosu::Image.new(window, "img/stone.bmp", true)
     @build_sprite = Gosu::Image.new(window, "img/path.bmp", true)
+    @house_sprite = Gosu::Image.new(window, "img/building.bmp", true)
   end
   
   def draw
@@ -37,11 +39,17 @@ class World
 			@wall_sprite.draw(@tilesize*pos[0], @tilesize*pos[1], 2)
 		end
     
+    @houses.each do |pos|
+			@house_sprite.draw(@tilesize*(pos[0] - 1), @tilesize*(pos[1] - 1), 2)
+		end
+    
     @stones.each do |pos|
       @stone_sprite.draw(@tilesize*pos[0], @tilesize*pos[1], 2)
     end
     
-    @build_sprite.draw(@tilesize*@build_spot[0], @tilesize*@build_spot[1], 1) if @build_spot != []
+    @build_spot.each do |pos|
+      @build_sprite.draw(@tilesize*pos[0], @tilesize*pos[1], 2)
+    end
   end
   
   def building_spot_exists?
@@ -50,7 +58,7 @@ class World
   end
   
   def building_complete
-    @build_spot = []
+    @houses << @build_spot.shift
   end
   
   def handle_wall_click(x, y)
@@ -76,6 +84,6 @@ class World
   def handle_build_click(x, y)
     x = (x/@tilesize).floor
     y = (y/@tilesize).floor
-		@build_spot = [x,y] if @build_spot == []
+      @build_spot << [x,y]
   end
 end

@@ -43,7 +43,7 @@ class Player
           @fsm.got_mat
           World.instance.stones.shift
         when "searching_buildspot"
-          if @path = Pathfinder.get_path(position, World.instance.build_spot)
+          if @path = Pathfinder.get_path(position, World.instance.build_spot[0])
             @fsm.path_found
           else
             @fsm.path_not_found
