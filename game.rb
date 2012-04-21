@@ -5,14 +5,16 @@ require 'yaml'
 require_relative 'fsm_build'
 require_relative 'player'
 require_relative 'world'
-require_relative 'enemy'
 require_relative 'pathfinder'
 require_relative 'buildings'
 
 class Game < Gosu::Window
 	
   def initialize
-    super 480, 480, false
+    @width = 1280
+    @height = 720
+    
+    super @width, @height, false
     self.caption = "Dan's Shit Game For Idiots: Dubstep Protocol"
     World.instance.image_init(self)
     Buildings.init
@@ -59,7 +61,7 @@ class Game < Gosu::Window
   end
   
   def mouse_within_screen(mouse_x, mouse_y)
-    (0 < mouse_x && mouse_x < 480 && 0 < mouse_y && mouse_y < 480)
+    (0 < mouse_x && mouse_x < @width && 0 < mouse_y && mouse_y < @height)
   end
 end
 

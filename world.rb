@@ -2,9 +2,9 @@ class World
   attr_reader :grid, :width, :height, :walls, :build_spot, :stones, :tilesize
   
   def initialize
-    @width = 20
-    @height = 20
-    @tilesize = 24
+    @width = 80
+    @height = 45
+    @tilesize = 16
     
     @grid = Array.new(width,[])
     @grid = @grid.map {Array.new(height,0)}
