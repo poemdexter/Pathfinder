@@ -1,10 +1,11 @@
-class Player
+class Player < GameObject
   
   attr_reader :fsm
   
   def initialize(window)
     
-    @bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
+    #@bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
+    @bandit_sprite = Image["img/bandit.bmp"]
     @x = @y = 0
     
     @fsm = FSMBuild.new

@@ -1,6 +1,8 @@
-require 'gosu'
 require 'state_machine'
 require 'yaml'
+require 'chingu'
+include Gosu
+include Chingu
 
 require_relative 'fsm_build'
 require_relative 'player'
@@ -8,13 +10,13 @@ require_relative 'world'
 require_relative 'pathfinder'
 require_relative 'buildings'
 
-class Game < Gosu::Window
+class Game < Chingu::Window
 	
   def initialize
     @width = 1280
     @height = 720
     
-    super @width, @height, false
+    super @width, @height
     self.caption = "Dan's Shit Game For Idiots: Dubstep Protocol"
     World.instance.image_init(self)
     Buildings.init
@@ -22,6 +24,7 @@ class Game < Gosu::Window
     @player = Player.new(self)
     
     @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
+    @player_state_text = Text.new("", :x => 5, :y => @height - 20, :zorder => 3)
   end
   
   def needs_cursor?
@@ -30,13 +33,15 @@ class Game < Gosu::Window
   
   def update
 		@player.update
+    
+    @player_state_text = Text.new("Player State: #{@player.fsm.state}", :x => 5, :y => @height - 20, :zorder => 3)
   end
   
   def draw
     World.instance.draw
     @player.draw
     
-    @font.draw(@player.fsm.state, 3, 460,3)
+    @player_state_text.draw
   end
   
   def button_down(id)
