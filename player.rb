@@ -1,26 +1,30 @@
 class Player < GameObject
-  
+
   attr_reader :fsm
-  
-  def initialize(window)
-    
-    #@bandit_sprite = Gosu::Image.new(window, "img/bandit.bmp", false)
-    @bandit_sprite = Image["img/bandit.bmp"]
-    @x = @y = 0
-    
+
+  def setup
+    @image = Image["img/bandit.bmp"]
+    @zorder = 2
+    @grid_x = @grid_y = 0
     @fsm = FSMBuild.new
     @fsm.set_building(:hut)
-    
+
     @update_rate = 200
-    @count_rate = 0 
+    @count_rate = 0
     @new_time = 0
     @old_time = 0
   end
-  
-  def draw
-    @bandit_sprite.draw(World.instance.tilesize*@x, World.instance.tilesize*@y, 2)
+
+  def x=(v)
+    @grid_x = v
+    @x = v * World.instance.tilesize
   end
-  
+
+  def y=(v)
+    @grid_y = v
+    @y = v * World.instance.tilesize
+  end
+
   def update
     if tick?
       case @fsm.state
@@ -35,8 +39,8 @@ class Player < GameObject
         when "walking_mat"
           if @path.count > 0
             node = @path.shift
-            @x = node[0]
-            @y = node[1]
+            self.x = node[0]
+            self.y = node[1]
           else
             @fsm.arrived
           end
@@ -52,8 +56,8 @@ class Player < GameObject
         when "walking_buildspot"
           if @path.count > 0
             node = @path.shift
-            @x = node[0]
-            @y = node[1]
+            self.x = node[0]
+            self.y = node[1]
           else
             @fsm.arrived
           end
@@ -86,13 +90,13 @@ class Player < GameObject
     end
     false
   end
-  
+
   def reposition(x, y)
-    @x = (x/World.instance.tilesize).floor
-    @y = (y/World.instance.tilesize).floor
+    self.x = x
+    self.y = y
   end
-  
+
   def position
-    [@x,@y]
+    [@grid_x, @grid_y]
   end
 end
