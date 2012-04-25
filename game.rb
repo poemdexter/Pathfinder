@@ -5,11 +5,16 @@ require 'chingu'
 include Gosu
 include Chingu
 
+# TODO loop through all this
+require_relative 'traits/grid_sprite'
+require_relative 'traits/grid_position'
+
 require_relative 'fsm_build'
 require_relative 'player'
 require_relative 'world'
 require_relative 'pathfinder'
 require_relative 'buildings'
+
 
 class Game < Chingu::Window
 	

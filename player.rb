@@ -1,11 +1,13 @@
-class Player < GameObject
+class Player < BasicGameObject
+  trait :grid_sprite, :grid_position
 
   attr_reader :fsm
 
   def setup
     @image = Image["img/bandit.bmp"]
+    @x = 0
+    @y = 0
     @zorder = 2
-    @grid_x = @grid_y = 0
     @fsm = FSMBuild.new
     @fsm.set_building(:hut)
 
@@ -13,16 +15,6 @@ class Player < GameObject
     @count_rate = 0
     @new_time = 0
     @old_time = 0
-  end
-
-  def x=(v)
-    @grid_x = v
-    @x = v * World.instance.tilesize
-  end
-
-  def y=(v)
-    @grid_y = v
-    @y = v * World.instance.tilesize
   end
 
   def update
@@ -39,8 +31,8 @@ class Player < GameObject
         when "walking_mat"
           if @path.count > 0
             node = @path.shift
-            self.x = node[0]
-            self.y = node[1]
+            @x = node[0]
+            @y = node[1]
           else
             @fsm.arrived
           end
@@ -56,8 +48,8 @@ class Player < GameObject
         when "walking_buildspot"
           if @path.count > 0
             node = @path.shift
-            self.x = node[0]
-            self.y = node[1]
+            @x = node[0]
+            @y = node[1]
           else
             @fsm.arrived
           end
@@ -78,25 +70,16 @@ class Player < GameObject
       end
     end
   end
-  
+
   def tick?
     @new_time = Gosu::milliseconds
     @count_rate = @count_rate + (@new_time - @old_time)
     @old_time = @new_time
-    
+
     if @count_rate > @update_rate
       @count_rate = 0
       return true
     end
     false
-  end
-
-  def reposition(x, y)
-    self.x = x
-    self.y = y
-  end
-
-  def position
-    [@grid_x, @grid_y]
   end
 end
