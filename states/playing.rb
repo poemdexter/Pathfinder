@@ -1,4 +1,4 @@
-class Playing < Chingu::GameState
+class Playing < Fidgit::GuiState
   
   def initialize
     super
@@ -12,13 +12,26 @@ class Playing < Chingu::GameState
     
     self.input = { :mouse_left => :left_click, :mouse_right => :right_click, :w => :w, :b => :b}
   end
+  
+  def setup
+    super
+    vertical :align_h => :right do
+      @button1 = button("Build", {:font_height => 14, :font_name => "Times New Roman"}) do
+        #button action
+      end
+      @button2 = button("Destroy", {:font_height => 14, :font_name => "Times New Roman"}) do
+        #button action
+      end
+    end
+  end
 
   def draw
-    super
+    
     World.instance.draw
     @player.draw
 
     @player_state_text.draw
+    super
   end
 
   def update

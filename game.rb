@@ -1,6 +1,7 @@
 require 'state_machine'
 require 'yaml'
 require 'chingu'
+require 'fidgit'
 
 include Gosu
 include Chingu
