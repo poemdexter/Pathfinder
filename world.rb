@@ -20,12 +20,12 @@ class World
     @@instance ||= World.new
   end
   
-  def image_init(window)
-    @target_sprite = Gosu::Image.new(window, "img/grass.bmp", true)
-    @wall_sprite = Gosu::Image.new(window, "img/wall.bmp", true)
-    @stone_sprite = Gosu::Image.new(window, "img/stone.bmp", true)
-    @build_sprite = Gosu::Image.new(window, "img/path.bmp", true)
-    @house_sprite = Gosu::Image.new(window, "img/building.bmp", true)
+  def image_init
+    @target_sprite = Image["img/grass.bmp"]
+    @wall_sprite   = Image["img/wall.bmp"]
+    @stone_sprite  = Image["img/stone.bmp"]
+    @build_sprite  = Image["img/path.bmp"]
+    @house_sprite  = Image["img/building.bmp"]
   end
   
   def draw
