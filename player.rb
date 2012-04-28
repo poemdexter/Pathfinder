@@ -1,5 +1,5 @@
 class Player < BasicGameObject
-  trait :grid_sprite, :grid_position
+  traits :grid_sprite, :grid_position
 
   attr_reader :fsm
 
